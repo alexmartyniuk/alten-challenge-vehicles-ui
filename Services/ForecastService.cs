@@ -15,7 +15,7 @@ namespace VehiclesUI.Services
 
         public async Task<WeatherForecast[]> GetForecastAsync()
         {
-            return await _httpClient.GetJsonAsync<WeatherForecast[]>("https://altenwebappapi.azurewebsites.net/api/values");
+            return await _httpClient.GetJsonAsync<WeatherForecast[]>("https://altenvehiclesapi.azurewebsites.net/api/values");
         }
     }
 
