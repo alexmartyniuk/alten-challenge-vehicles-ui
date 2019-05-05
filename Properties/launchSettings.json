@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "VehiclesUI": {
+      "emitEntryPoint": true,
+      "commandName": "Project",
+      "commandLineArgs": "--urls http://0.0.0.0:3000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
