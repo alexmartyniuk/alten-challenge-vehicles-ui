@@ -23,11 +23,11 @@ steps:
 - script: docker build -t vehiclesui .
   displayName: 'docker build'         
   
-- script: docker tag vehiclesui altenchallengecontainers.azurecr.io/vehiclesui:v1
+- script: docker tag vehiclesui altenchallengecontainers.azurecr.io/vehiclesui:$(Build.BuildNumber)
   displayName: 'docker tag'  
   
 - script: docker login https://altenchallengecontainers.azurecr.io -u AltenChallengeContainers -p SIgnOHm5+EWnoupFU5TC77GZOfiUBHkS
   displayName: 'docker login'
   
-- script: docker push altenchallengecontainers.azurecr.io/vehiclesui:v1
+- script: docker push altenchallengecontainers.azurecr.io/vehiclesui:$(Build.BuildNumber)
   displayName: 'docker push'
