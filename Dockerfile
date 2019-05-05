@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core-nightly/sdk:3.0.100-preview5-alpine
 WORKDIR /VehiclesUI
 COPY . .
-RUN dotnet build
+RUN dotnet build --configuration Debug
 EXPOSE 80
 CMD ["dotnet", "run", "--urls", "http://0.0.0.0:80"]
