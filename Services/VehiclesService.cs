@@ -9,6 +9,9 @@ namespace VehiclesUI.Services
 {
     public class VehiclesService
     {
+        // private const string ServiceBaseUrl = "https://altenvehiclesapi.azurewebsites.net/api/";
+        private const string ServiceBaseUrl = "http://localhost:50701/api/";
+
         private HttpClient _httpClient;
         public VehiclesService(HttpClient httpClient)
         {
@@ -28,14 +31,19 @@ namespace VehiclesUI.Services
                queryParams.Add($"customerId={customerId.Value}");     
             } 
 
-            var serviceUrl = "https://altenvehiclesapi.azurewebsites.net/api/vehicles?" + string.Join("&", queryParams);    
+            var serviceUrl = ServiceBaseUrl + "vehicles?" + string.Join("&", queryParams);    
 
             return await _httpClient.GetJsonAsync<Vehicle[]>(serviceUrl);
         }
 
         public async Task<Customer[]> GetCustomersAsync()
         {
-            return await _httpClient.GetJsonAsync<Customer[]>("https://altenvehiclesapi.azurewebsites.net/api/customers");
+            return await _httpClient.GetJsonAsync<Customer[]>(ServiceBaseUrl + "customers");
+        }
+
+        public async Task ConnectAsync(int vehicleId)
+        {
+            await _httpClient.PostAsync(ServiceBaseUrl + $"vehicles/{vehicleId}/connect", null);
         }
     }
 }

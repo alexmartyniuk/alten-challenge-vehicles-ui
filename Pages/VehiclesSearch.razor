@@ -6,7 +6,7 @@
 
 <h1>Search for Vehicles</h1>
 
-<p>This page allow to search for Vehicles by their Owner and Statuses</p>
+<p>Select Customer and Vehicle Status from dorpdown and press Search</p>
 
 @if (customers == null)
 {
@@ -16,27 +16,28 @@ else
 {
 <div>
     <div class="row">
-        <div class="col">
-            <select id="select-box" bind="@customerSelect" class="form-control">
+        <div class="col">           
+            <select id="customer-select-box" bind="@customerSelect" class="form-control">
                 <option value=0>All customers</option>
                 @foreach (var customer in customers)
                 {
-                    <option value=@customer.Id>@customer.FullName</option>        
-                } 
+                    <option value=@customer.Id>@customer.FullName</option>
+                }
             </select>
         </div>
         <div class="col">
-            <select id="check-box" bind="@connectedSelect" class="form-control">
+            <select id="status-select-box" bind="@connectedSelect" class="form-control">
                 <option value=0>All statuses</option>
                 <option value=1>Connected</option>
                 <option value=2>Disconnected</option>
-            </select>   
+            </select>
         </div>
         <div class="col">
             <button class="btn btn-primary" onclick="@SearchAsync">Search</button>
         </div>
     </div>    
 </div>
+
 <br>   
 }
 
@@ -52,17 +53,21 @@ else
                 <th>Vehicle ID</th>
                 <th>Registration Number</th>
                 <th>Connected</th>
+                <th>Customer Name</th>
+                <th>Customer Address</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var vehicle in vehicles)
             {
-                <tr>
-                    <td>@vehicle.Id</td>
-                    <td>@vehicle.VehicleId</td>
-                    <td>@vehicle.RegistrationNumber</td>                    
-                    <td>@vehicle.Connected</td>
-                </tr>
+            <tr>
+                <td>@vehicle.Id</td>
+                <td>@vehicle.VehicleId</td>
+                <td>@vehicle.RegistrationNumber</td>
+                <td>@vehicle.Connected</td>
+                <td>@vehicle.Customer.FullName</td>
+                <td>@vehicle.Customer.Address</td>
+            </tr>
             }
         </tbody>
     </table>

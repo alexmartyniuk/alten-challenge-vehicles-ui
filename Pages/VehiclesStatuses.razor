@@ -1,0 +1,52 @@
+﻿@page "/statuses"
+@inject HttpClient Http
+@using VehiclesUI.Services
+@using VehiclesUI.Models
+@inject VehiclesService VehiclesService
+
+<h1>Set status for Vehicles</h1>
+
+<p>Press Connect to set status of the Vehicle as Connected</p>
+
+@if (vehicles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vehicle ID</th>
+                <th>Registration Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in vehicles)
+            {
+            <tr>
+                <td>@vehicle.Id</td>
+                <td>@vehicle.VehicleId</td>
+                <td>@vehicle.RegistrationNumber</td>
+                <td><button class="btn btn-primary" onclick=@(() => Connect(vehicle.Id))>Connect</button></td>                
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+
+    Vehicle[] vehicles;
+
+    protected override async Task OnInitAsync()
+    {
+        vehicles = await VehiclesService.GetVehiclesAsync(null, null);
+    }   
+
+    private async Task Connect(int vehicleId)
+    {
+        await VehiclesService.ConnectAsync(vehicleId);
+    }
+}

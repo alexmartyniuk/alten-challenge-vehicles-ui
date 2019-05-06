@@ -11,6 +11,6 @@ namespace VehiclesUI.Models
         public string VehicleId { get; set; }
         public string RegistrationNumber { get; set; }
         public bool Connected { get; set; }
-        public int CustomerId { get; set; }        
+        public Customer Customer { get; set; }        
     }
 }
