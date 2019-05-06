@@ -1,13 +1,14 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 @using VehiclesUI.Services
-@inject ForecastService ForecastService
+@using VehiclesUI.Models
+@inject VehiclesService VehiclesService
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (vehicles == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,20 +17,20 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>#</th>
+                <th>Vehicle ID</th>
+                <th>Registration Number</th>
+                <th>Connected</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var vehicle in vehicles)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@vehicle.Id</td>
+                    <td>@vehicle.VehicleId</td>
+                    <td>@vehicle.RegistrationNumber</td>                    
+                    <td>@vehicle.Connected</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +38,10 @@ else
 }
 
 @functions {
-    WeatherForecast[] forecasts;
+    Vehicle[] vehicles;
 
     protected override async Task OnInitAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync();        
+        vehicles = await VehiclesService.GetVehiclesAsync();        
     }
 }

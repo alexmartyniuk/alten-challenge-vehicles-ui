@@ -11,7 +11,7 @@ namespace VehiclesUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<HttpClient>();
-            services.AddSingleton<ForecastService>();
+            services.AddSingleton<VehiclesService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
