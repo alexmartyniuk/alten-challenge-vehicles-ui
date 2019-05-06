@@ -9,9 +9,11 @@ namespace VehiclesUI.Services
 {
     public class VehiclesService
     {
-        // private const string ServiceBaseUrl = "https://altenvehiclesapi.azurewebsites.net/api/";
+#if DEBUG
         private const string ServiceBaseUrl = "http://localhost:50701/api/";
-
+#else
+        private const string ServiceBaseUrl = "https://altenvehiclesapi.azurewebsites.net/api/";
+#endif
         private HttpClient _httpClient;
         public VehiclesService(HttpClient httpClient)
         {
