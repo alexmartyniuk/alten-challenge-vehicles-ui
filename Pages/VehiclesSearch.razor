@@ -64,7 +64,7 @@ else
                 <td>@vehicle.Id</td>
                 <td>@vehicle.VehicleId</td>
                 <td>@vehicle.RegistrationNumber</td>
-                <td>@vehicle.Connected</td>
+                <td>@(vehicle.Connected ? "YES" : "NO")</td>
                 <td>@vehicle.Customer.FullName</td>
                 <td>@vehicle.Customer.Address</td>
             </tr>
