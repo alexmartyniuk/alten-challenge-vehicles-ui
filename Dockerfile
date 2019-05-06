@@ -3,4 +3,4 @@ WORKDIR /VehiclesUI
 COPY . .
 RUN dotnet build --configuration Release
 EXPOSE 80
-CMD ["dotnet", "run", "--urls", "http://0.0.0.0:80"]
+CMD ["dotnet", "run", "--configuration", "Release", "--urls", "http://0.0.0.0:80"]
