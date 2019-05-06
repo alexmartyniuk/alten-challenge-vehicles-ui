@@ -4,13 +4,44 @@
 @using VehiclesUI.Models
 @inject VehiclesService VehiclesService
 
-<h1>Weather forecast</h1>
+<h1>Search for Vehicles</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>This page allow to search for Vehicles by their Owner and Statuses</p>
+
+@if (customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div>
+    <div class="row">
+        <div class="col">
+            <select id="select-box" bind="@customerSelect" class="form-control">
+                <option value=0>All customers</option>
+                @foreach (var customer in customers)
+                {
+                    <option value=@customer.Id>@customer.FullName</option>        
+                } 
+            </select>
+        </div>
+        <div class="col">
+            <select id="check-box" bind="@connectedSelect" class="form-control">
+                <option value=0>All statuses</option>
+                <option value=1>Connected</option>
+                <option value=2>Disconnected</option>
+            </select>   
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" onclick="@SearchAsync">Search</button>
+        </div>
+    </div>    
+</div>
+<br>   
+}
 
 @if (vehicles == null)
 {
-    <p><em>Loading...</em></p>
 }
 else
 {
@@ -38,10 +69,34 @@ else
 }
 
 @functions {
+
+    Customer[] customers;
+    int customerSelect;
+    int connectedSelect;    
+
     Vehicle[] vehicles;
 
     protected override async Task OnInitAsync()
+    {        
+        customers = await VehiclesService.GetCustomersAsync();        
+    }
+
+    private async Task SearchAsync()
     {
-        vehicles = await VehiclesService.GetVehiclesAsync();        
+        vehicles = null;
+
+        int? customer = null;
+        if (customerSelect > 0)
+        {
+            customer = customerSelect;
+        }
+
+        bool? connected = null;
+        if (connectedSelect > 0)
+        {
+            connected = connectedSelect == 1;
+        }
+
+        vehicles = await VehiclesService.GetVehiclesAsync(customer, connected); 
     }
 }
