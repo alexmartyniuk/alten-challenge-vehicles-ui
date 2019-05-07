@@ -10,7 +10,7 @@ namespace VehiclesUI.Services
     public class VehiclesService
     {
 #if DEBUG
-        private const string ServiceBaseUrl = "http://localhost:50701/api/";
+        private const string ServiceBaseUrl = "http://localhost:3001/api/";
 #else
         private const string ServiceBaseUrl = "https://altenvehiclesapi.azurewebsites.net/api/";
 #endif
