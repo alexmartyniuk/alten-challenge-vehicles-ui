@@ -1,6 +1,18 @@
 # Vehicles Application
+### You can find application running on https://altenvehiclesui.azurewebsites.net/
+The whole application consists of a UI part and an API part. UI part was written on C# with .NET Core Blazor Framework. API part was written on C# with .NET Core WebAPI Framework. 
 
-The whole application consists of a UI part and an API part. UI part was written on C# with .NET Core Blazor Framework. API part was written on C# with .NET Core WebAPI Framework and SQLite Database. 
+
+### User Interface
+To search for Vehicles on the start page select Customer and Status in dropdowns and press Search button.
+
+![Search UI](https://dev.azure.com/AlexMartyniuk/73a1f480-1085-4872-94f9-7728e4b865bd/_apis/git/repositories/419e5f2b-0e33-4aa9-9d59-a14a416f162d/Items?path=%2FImages%2FSearchVehiclesUI.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&download=false&resolveLfs=true&%24format=octetStream&api-version=5.0-preview.1)
+
+To Connect specific vehicle on the Connect Vehicles page press the appropriate button Connect.
+
+![Search UI](https://dev.azure.com/AlexMartyniuk/73a1f480-1085-4872-94f9-7728e4b865bd/_apis/git/repositories/419e5f2b-0e33-4aa9-9d59-a14a416f162d/Items?path=%2FImages%2FConnectVehiclesUI.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&download=false&resolveLfs=true&%24format=octetStream&api-version=5.0-preview.1)
+
+
 ### Communication protocol
 UI part communicates with API part thru HTTP REST API, that implements 3 endpoints:
 
@@ -70,6 +82,41 @@ This command just changs the configuration for the existed App Service. The comm
 
 ### Static Analyzing and Unit Testing
 Web API part of the application has connected StyleCop rules check, that perform during each build. Also in [Tests folder](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_git/VehiclesAPI?path=%2FTests&version=GBmaster). Tests cover VehicleService as a main part of the functionality and working with storage.
+
+### Data storage
+As data storage used local SQLite database that automatically creates during the successful start of Web API application. The database consists of two tables: Customers and Vehicles that related as 1 : N. One customer can have several vehicles.
+```
+CREATE TABLE "Customers" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Customers" PRIMARY KEY AUTOINCREMENT,
+    "FullName" TEXT NULL,
+    "Address" TEXT NULL
+);
+CREATE TABLE "Vehicles" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Vehicles" PRIMARY KEY AUTOINCREMENT,
+    "VehicleId" TEXT NULL,
+    "RegistrationNumber" TEXT NULL,
+    "ConnectUpdated" TEXT NOT NULL,
+    "CustomerId" INTEGER NOT NULL,
+    CONSTRAINT "FK_Vehicles_Customers_CustomerId" FOREIGN KEY ("CustomerId") REFERENCES "Customers" ("Id") ON DELETE CASCADE
+);
+```
+
+### Architecture
+From an architectural point of view, the system is a 3-tier.
+* Presentation Tier is a Web UI Application.
+* Application Tier is a Web API Application.
+* Data Tier is SQLite local database connected via Entity Framework Core.
+
+The whole application hosted on Microsoft Azure in App Services.
+
+![Schema of architecture](https://dev.azure.com/AlexMartyniuk/73a1f480-1085-4872-94f9-7728e4b865bd/_apis/git/repositories/419e5f2b-0e33-4aa9-9d59-a14a416f162d/Items?path=%2FImages%2FSystemArchitecture.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&download=false&resolveLfs=true&%24format=octetStream&api-version=5.0-preview.1)
+
+### Logging and Monitoring
+Web API application uses the Application Insights service from Azure. It allows log exceptions and monitors application under load. For example, metrics of load testing of the application with 250 concurrent users.
+
+![Load testing metrics](https://dev.azure.com/AlexMartyniuk/73a1f480-1085-4872-94f9-7728e4b865bd/_apis/git/repositories/419e5f2b-0e33-4aa9-9d59-a14a416f162d/Items?path=%2FImages%2FPerformanceTestResults.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&download=false&resolveLfs=true&%24format=octetStream&api-version=5.0-preview.1)
+
+
 
 
 
