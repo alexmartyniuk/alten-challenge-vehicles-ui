@@ -4,9 +4,9 @@
 @using VehiclesUI.Models
 @inject VehiclesService VehiclesService
 
-<h1>Set status for Vehicles</h1>
+<h1>Connect Vehicles</h1>
 
-<p>Press Connect to set status of the Vehicle as Connected</p>
+<p>Press Connect to change the status of the Vehicle to Connected</p>
 
 @if (vehicles == null)
 {
@@ -20,6 +20,7 @@ else
                 <th>ID</th>
                 <th>Vehicle ID</th>
                 <th>Registration Number</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
