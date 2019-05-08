@@ -81,7 +81,7 @@ FOR /f "tokens=*" %i IN ('docker ps -q') DO docker stop %i
 The whole project hosted in Azure DevOps: https://dev.azure.com/AlexMartyniuk/AltenChallenge
 Both UI and API application hosted in App Services in the Microsoft Azure cloud. During a build process, docker images with services will be deployed to the Azure Container Registry. During a release, docker images will be injected into appropriate App Services and the App Services are restarted. Both build and release pipelines are started automatically after every code push into the master branch.
 
-Build pipelines you can find in:
+Build pipeline configurations you can find in:
 * Web UI: https://dev.azure.com/AlexMartyniuk/AltenChallenge/_git/VehiclesUI?path=%2Fazure-pipelines.yml&version=GBmaster
 * Web API: https://dev.azure.com/AlexMartyniuk/AltenChallenge/_git/VehiclesAPI?path=%2Fazure-pipelines.yml&version=GBmaster
 
@@ -90,6 +90,9 @@ The deployment of an application to Azure performed via the next command.
 az webapp config container set -n AltenVehiclesAPI -g AltenChallenge-RG --docker-custom-image-name $(DockerCustomImageName) --docker-registry-server-url $(DockerRegistryServerUrl) --docker-registry-server-user $(DockerRegistryServerUser) --docker-registry-server-password $(DockerRegistryServerPassword)
 ```
 This command just changes the configuration for the existing App Service. The command runs as a part of an automatic release pipeline that started after a successful build.
+
+[Build pipelines](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_release)
+[Release pipelines](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_build)
 
 ### Static Analyzing and Unit Testing
 Web API part of the application has connected StyleCop rules check, that perform during each build. The check rules specified in [Rule checks](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_git/VehiclesAPI?path=%2FStaticAnalysis.ruleset&version=GBmaster)
@@ -151,10 +154,3 @@ If we suppose that Connect endpoint will be requested very often and dashboard f
 * function for getting customers data from persistent storage by HTTP request
 
 Taking into account the issue with the cold start that could freeze the Web UI application I recommend to implement the whole solution as a set of serverless function only if the number of connected vehicles will be significant.
-
-
-
-
-
-
-
