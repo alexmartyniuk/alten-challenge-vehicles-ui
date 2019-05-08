@@ -144,13 +144,13 @@ But it also has own cons (for Azure Function and Consumption plan):
 * we limited to the number of supported runtimes
 * the serverless code has other runtime limitations (multithreading, etc.)
 
-If we suppose that Connect endpoint will be requested very often and dashboard for connected vehicles will be built rarely we can build the Web API as fourFunctions and one Message Queue:
+If we suppose that Connect endpoint will be requested very often and dashboard for connected vehicles will be built rarely we can build the Web API as four Functions and one Message Queue:
 * function for handling HTTP queries for the Connect endpoint should save vehicle id into Queue for future processing
 * function for handling new messages from the Queue and storing them into some persistent storage that can scale automatically
 * function for getting vehicles data from persistent storage by HTTP request
 * function for getting customers data from persistent storage by HTTP request
 
-Taking into account the issue with the cold start that could freeze the Web UI application I recommend to implement the whole solution as a set of serverless function if the number of connected vehicles will be significant.
+Taking into account the issue with the cold start that could freeze the Web UI application I recommend to implement the whole solution as a set of serverless function only if the number of connected vehicles will be significant.
 
 
 
