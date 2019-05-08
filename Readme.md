@@ -130,6 +130,30 @@ Web API application uses the Application Insights service from Azure. It allows 
 
 ![Load testing metrics](https://dev.azure.com/AlexMartyniuk/73a1f480-1085-4872-94f9-7728e4b865bd/_apis/git/repositories/419e5f2b-0e33-4aa9-9d59-a14a416f162d/Items?path=%2FImages%2FPerformanceTestResults.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&download=false&resolveLfs=true&%24format=octetStream&api-version=5.0-preview.1)
 
+### Serverless
+Some parts of the application can be implemented as serverless. For example, Web API service can be hosted in Azure Function or AWS Lambda. But Web UI application can't be hosted as serverless because it uses .NET Core 3.0 that isn't supported by Function's or Lambda's runtimes.
+Implementing Web API as a Function we need to add API proxy and HTTP trigger for this function to make it available from outside the cloud. 
+Implementing Web API as an Azure Function gives us some advantages:
+* it scales with demand automatically
+* it reduces server cost because we don’t pay for idle
+* it eliminates docker containers maintenance
+
+But it also has own cons (for Azure Function and Consumption plan):
+* cold start is significant for .NET based Functions
+* we limited by 10 min of execution time
+* we limited to the number of supported runtimes
+* the serverless code has other runtime limitations (multithreading, etc.)
+
+If we suppose that Connect endpoint will be requested very often and dashboard for connected vehicles will be built rarely we can build the Web API as fourFunctions and one Message Queue:
+* function for handling HTTP queries for the Connect endpoint should save vehicle id into Queue for future processing
+* function for handling new messages from the Queue and storing them into some persistent storage that can scale automatically
+* function for getting vehicles data from persistent storage by HTTP request
+* function for getting customers data from persistent storage by HTTP request
+
+Taking into account the issue with the cold start that could freeze the Web UI application I recommend to implement the whole solution as a set of serverless function if the number of connected vehicles will be significant.
+
+
+
 
 
 
