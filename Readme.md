@@ -91,8 +91,9 @@ az webapp config container set -n AltenVehiclesAPI -g AltenChallenge-RG --docker
 ```
 This command just changes the configuration for the existing App Service. The command runs as a part of an automatic release pipeline that started after a successful build.
 
-[Build pipelines](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_release)
-[Release pipelines](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_build)
+Build pipelines: https://dev.azure.com/AlexMartyniuk/AltenChallenge/_release)
+
+Release pipelines: https://dev.azure.com/AlexMartyniuk/AltenChallenge/_build)
 
 ### Static Analyzing and Unit Testing
 Web API part of the application has connected StyleCop rules check, that perform during each build. The check rules specified in [Rule checks](https://dev.azure.com/AlexMartyniuk/AltenChallenge/_git/VehiclesAPI?path=%2FStaticAnalysis.ruleset&version=GBmaster)
